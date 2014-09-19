@@ -1,1 +1,10 @@
 body { margin: 10px auto; }
+
+input[type=text], textarea { padding: 3px; border-radius: .3em; border: 1px solid #bbb; }
+textarea { width: 100%; }
+
+div.albums { float: left; width: 300px; margin-right: 10px; min-height: 200px;}
+div.albums-heading { float: right; }
+p.descprition { padding: 10px; }
+
+.new-album-name { width: 100%; margin-bottom: 10px; }

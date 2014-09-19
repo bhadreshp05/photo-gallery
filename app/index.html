@@ -9,10 +9,42 @@
     <body>
         <div class="container" ng-controller="mainCtrl">
             <h1>Photo Gallery</h1>
-
-            <div class="alert alert-info">
-                Places to visit {{photoArray}}
+            <hr>
+            <p><input type="text" ng-model="searchFor" placeholder="Type to Search"></p>
+            
+            <p>There are {{albums.length}} albums available to view:</p>
+            
+            <div class="panel panel-primary albums" ng-repeat="album in albums | filter:{ title: searchFor } | orderBy:'date'">
+                <div class="panel-heading">
+                    <div class="albums-heading">
+                        {{album.date}}                                                                   
+                    </div>
+                    {{album.title}} 
+                </div>
+                <p class="descprition">{{album.description}}</p>
             </div>
+            
+            <div style="clear: left;"></div>
+            
+            <h3>Add New Album</h3>
+            <div class="panel panel-default albums">
+                
+                <form name="add-album-form" novalidate>
+                    <div class="panel-heading">
+                        <div class="alert alert-danger" ng-show="addAlbumError">{{ addAlbumError}}</div>
+                        <input type="text" placeholder="Title..." size="20" ng-model="adding_album.title"/>
+                        <div class="albums-heading">
+                            <input name="date" type="text" placeholder="yyy/mm/dd" size="10" ng-model="adding_album.date"/>                                                          
+                        </div>
+                    </div>
+                    <p class="descprition">
+                        <input class="new-album-name" type="text" ng-model="adding_album.name" placeholder="New Album Name"/>
+                        <textarea ng-model="adding_album.description" placeholder="Description..." rows="4"></textarea>
+                        <button class="btn btn-success" ng-click="addAlbum(adding_album)">Add New Album</button>
+                    </p>
+                </form>
+            </div>
+            
         </div>
         
         <script src="./bower_components/angular/angular.min.js"></script>
