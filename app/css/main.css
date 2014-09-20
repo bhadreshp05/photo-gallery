@@ -8,3 +8,5 @@ div.albums-heading { float: right; }
 p.descprition { padding: 10px; }
 
 .new-album-name { width: 100%; margin-bottom: 10px; }
+
+div.panel div.panel-heading .album-title { color: #fff; }
