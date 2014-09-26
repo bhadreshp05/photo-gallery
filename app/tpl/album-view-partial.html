@@ -9,7 +9,7 @@
 
 	<div class="thumbnail" style="250px; float: left; margin-right: 10px;" ng-repeat="photo in photos">
 		<a href="#/album/{{album_name}}/photos/{{photo.filename}}">
-			<img src="./media/{{album_name}}/thumb/{{photo.filename}}" alt="">
+			<img ng-src="./media/{{album_name}}/thumb/{{photo.filename}}" alt="">
 		</a>
 		<p>{{photo.description}}</p>
 	</div>

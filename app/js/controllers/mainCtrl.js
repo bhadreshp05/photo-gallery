@@ -1,46 +1,29 @@
-photoApp.controller('mainCtrl', ['$scope', function ($scope) {
+
+photoApp.controller('mainCtrl', function ($scope, albumProvider) {
     $scope.adding_album = {};
     $scope.addAlbumError = "";
-    $scope.albums = [{ name: 'madrid309', title: 'Weekend in Madird', date: '2013-09-01', description: 'Fun weekend visiting the Capitol of Spain'},
-                     { name: 'mexico2011', title: 'Weekend in Cancun', date: '2011-03-01', description: 'Fun weekend visiting the Cancun'},
-                     { name: 'india2010', title: 'Holiday in India', date: '2010-12-25', description: 'Fun times back in motherland'}
-                    ];
 
+    $scope.albums = albumProvider.getAlbums();
 
-    $scope.addAlbum = function(new_album) {
-        if (!new_album.title) {
-            $scope.addAlbumError = 'Missing Title'
-        } else if (!new_album.date || !isValidDate(new_album.date) ) {
-            $scope.addAlbumError = 'Invalid Date';
-        } else if (!new_album.name) {
-            $scope.addAlbumError = 'Missing short name';
-        } else if (!new_album.description) {
-            $scope.addAlbumError = 'Missing Description';
-        } else {
-            $scope.albums.push(new_album);
+    $scope.addAlbum = function (new_album) {
+        try {
+            albumProvider.addAlbum(new_album);
             $scope.adding_album = {};
             $scope.addAlbumError = "";
+        } catch (e) {
+            if (e.message == "missing_name") {
+                $scope.addAlbumError =  "You need to give a title";
+            } else if (e.message == "missing_date") {
+                $scope.addAlbumError =  "You need to give a date";
+            } else if (e.message == "missing_description") {
+                $scope.addAlbumError =  "You need to give a description";
+            } else if (e.message == "missing_title") {
+                $scope.addAlbumError =  "You need to give a title";
+            } else if (e.message == "bad_date") {
+                $scope.addAlbumError =  "You need to give a valid date";
+            } else if (e.message == "duplicate_album_name") {
+                $scope.addAlbumError =  "You need to give a diffrent album name";
+            }
         }
-    }
-
-    // Check for valid date. Ex. 2014/05/05, 2014-05-05, 2014-5-5, 14-5-5.
-    function isValidDate (date) {
-        if (date.match(/^[0-9]{2,4}[\-\/\. ,][0-9]{1,2}[\-\/\. ,][0-9]{1,2}$/)) {
-            var d = new Date(date);
-            return !isNaN(d.getTime());
-        } else {
-            return false;
-        }
-    }
-
-//    function fixupPhoneNumber (phone) {
-//        phone = phone.trim();
-//        var out = "";
-//        if (phone[0] == '+') out += '+';
-//        for (var i = 0; i < phone.length; i++) {
-//            if (!isNaN(parseInt(phone[i])))
-//                out += phone[i];
-//        }
-//        return out;
-//    }
-}]);
+    };
+});
